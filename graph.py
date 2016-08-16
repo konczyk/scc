@@ -9,7 +9,7 @@ class Graph:
 
     def __init__(self, data):
         self._v = 0
-        self._graph = defaultdict(lambda: defaultdict(set))
+        self._graph = defaultdict(set)
         self._load_data(data)
 
     def _load_data(self, data):
@@ -19,15 +19,18 @@ class Graph:
         """
 
         for line in data:
-            vertex, out_edge = [int(i) for i in line.split()]
-            self._add_edge(vertex, 'out', out_edge)
-            self._add_edge(out_edge, 'in', vertex)
+            vertex, edge = [int(i) for i in line.split()]
+            self._graph[vertex].add(edge)
 
-    def _add_edge(self, vertex, edge_type, edge):
-        self._graph[vertex][edge_type].add(edge)
+    def edges(self, vertex):
+        return self._graph[vertex]
 
-    def out_edges(self, vertex):
-        return self._graph[vertex]['out']
+    def reverse(self):
+        reversed_graph = defaultdict(set)
+        while len(self._graph) > 0:
+            vertex, edges = self._graph.popitem()
+            for edge in edges:
+                reversed_graph[edge].add(vertex)
+        self._graph = reversed_graph
 
-    def in_edges(self, vertex):
-        return self._graph[vertex]['in']
+
