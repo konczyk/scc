@@ -43,6 +43,9 @@ class SCC:
         return finished
 
     def _dfs(self, source, marked):
+        """
+        Iterative DFS to handle large graphs
+        """
         stack, popped = [source], set()
         while stack:
             vertex = stack[-1]
@@ -56,12 +59,14 @@ class SCC:
                     popped.add(vertex)
                     yield vertex
 
-    def components(self):
+    def components(self, n=None):
         """
-        Return found components
+        Return found components sorted by size
         """
 
-        return self._components.values()
+        num = n or len(self._components)
+        return sorted(self._components.values(), key=lambda x: len(x),
+                      reverse=True)[0:num]
 
     def sizes(self, n=None):
         """

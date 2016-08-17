@@ -24,8 +24,17 @@ class SCCTest(unittest.TestCase):
         comps = scc.components()
 
         self.assertEqual(len(comps), 2)
-        self.assertIn({1, 2, 3, 4, 6, 7, 8}, comps)
-        self.assertIn({5}, comps)
+        self.assertEquals({1, 2, 3, 4, 6, 7, 8}, comps[0])
+        self.assertEquals({5}, comps[1])
+
+    def test_sizes(self):
+        scc = SCC(Graph(self.data))
+
+        sizes = scc.sizes()
+
+        self.assertEqual(len(sizes), 2)
+        self.assertEquals(7, sizes[0])
+        self.assertEquals(1, sizes[1])
 
 
 if __name__ == '__main__':
