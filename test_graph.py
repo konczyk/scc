@@ -39,6 +39,11 @@ class GraphTest(unittest.TestCase):
         self.assertSetEqual(graph.edges(4), {3})
         self.assertSetEqual(graph.edges(5), {4})
 
+    def test_vertices(self):
+        graph = Graph(self.data)
+
+        self.assertEqual(sorted(graph.vertices()), [0, 1, 3, 4])
+
 
 if __name__ == '__main__':
     unittest.main()
